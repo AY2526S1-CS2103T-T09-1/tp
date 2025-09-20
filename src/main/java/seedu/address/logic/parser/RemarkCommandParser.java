@@ -36,4 +36,5 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         Remark remark  = new Remark(remarkString);
         return new RemarkCommand(index, remark);
     }
+
 }
