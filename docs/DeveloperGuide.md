@@ -318,12 +318,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `HeartLink` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a person**
+**Use case: Add a client**
 
 **MSS**
 
-1.  User requests to add person
-2.  HeartLink adds the person to the list.
+1.  User requests to add client
+2.  HeartLink adds the client to the list.
 
     Use case ends.
 
@@ -348,14 +348,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-**Use case: Edit a person**
+**Use case: Edit client information**
 
 **MSS**
 
-1.  User requests to list persons
-2.  HeartLink shows a list of persons
+1.  User requests to [<u>view clients</u>](#use-case-view-clients). 
+2.  HeartLink shows a list of clients
 3.  User requests to edit a specific person in the list
-4.  HeartLink edits the specified details of the person.
+4.  HeartLink edits the specified details of the clients.
 
     Use case ends.
 
@@ -387,7 +387,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to view clients.
+1. User requests to [<u>view clients</u>](#use-case-view-clients).
 2. HeartLink shows a list of clients.
 3. User requests to link an appointment to a specific client with the relevant details.
 4. HeartLink creates the appointment and links it to the chosen client.
@@ -420,6 +420,26 @@ Use case ends.
   * 3d1. HeartLink shows a duplicate appointment error.
 
     Use case resumes at step 2.
+
+**<a id="use-case-view-clients"></a>Use case: View clients**
+
+**MSS**
+1. User requests to list of clients.
+2. User provides additional attributes to filter by, such as name, appointment date, tag, and rank.
+3. HeartLink displays the list of all clients corresponding to the attributes given by a user.
+All information for each person are shown.
+
+   Use case ends.
+
+**Extensions**
+* 2a. The given request is syntactically incorrect.
+  * 2a1. HeartLink shows an error message.
+    
+    Use case resumes at step 1.
+* 2b. One of the fields are invalid. 
+  * 2b1. HearLink shows an error message.
+    
+    Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
