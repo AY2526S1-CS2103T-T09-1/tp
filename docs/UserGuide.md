@@ -110,24 +110,47 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Look up clients by fields: `find`
 
-Finds persons whose names contain any of the given keywords.
+```
+find [/n KEYWORD_1 KEYWORD_2 ...] [/p PHONE] [/e EMAIL] [/a ADDRESS] [/t TAG] [/r RANK]
+```
+You can use this command to retrieve a list of clients that match the specified attributes:
+- Name `/n KEYWORD_1 KEYWORD_2 ...` — lists all clients whose names contain any of the specified keywords.
+The search is case-insensitive.
+- Phone number `/p PHONE` - lists all clients whose phone numbers exactly match `PHONE`.
+- Email `/e EMAIL` - lists all clients whose email exactly match `EMAIL`.
+- Address `/r ADDRESS` - lists all clients whose address exactly match `ADDRESS`.
+- Tag `/t TAG` - lists all clients whose tag contains `TAG`.
+- Address `/r ADDRESS` - lists all clients whose rank exactly match `RANK`.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+> [!NOTE]  
+> The order of the attributes does not matter.
+> If you haven't specified any attributes, the system will list all clients.
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+Example usage:
 
+You want to list all urgent clients whose name contains "John" or "Doe.
+```
+find /n John Doe /r urgent
+```
+Example output (other fields omitted)
+```
+John Doe [rank: urgent]
+Jane Doe [rank: urgent]
+John Lock [rank: urgent]
+```
+
+You want to list all clients with tag patients and phone number 81234567.
+```
+find /p 81234567 /t patient
+```
+Example output (other fields omitted)
+```
+James Bond [81234567, tag: patient, friend]
+John Doe [81234567, tag: patient]
+```
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
