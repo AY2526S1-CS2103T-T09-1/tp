@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="appointmentCardRoot"
+      spacing="14">
+
+    <!-- Calendar column -->
+    <VBox fx:id="calendarBox" spacing="3">
+        <Label fx:id="month" styleClass="calendar-month"/>
+        <Label fx:id="day" styleClass="calendar-day"/>
+        <Label fx:id="year" styleClass="calendar-year"/>
+        <Label fx:id="time" styleClass="calendar-time"/>
+    </VBox>
+
+    <!-- Details -->
+    <VBox fx:id="detailsBox" spacing="6">
+        <Label fx:id="status" styleClass="cell_small_label"/>
+        <Label fx:id="type" styleClass="cell_small_label"/>
+        <Label fx:id="appointmentLocation" styleClass="cell_small_label"/>
+        <Label fx:id="length" styleClass="cell_small_label"/>
+        <Label fx:id="message" styleClass="cell_small_label"/>
+    </VBox>
+</HBox>

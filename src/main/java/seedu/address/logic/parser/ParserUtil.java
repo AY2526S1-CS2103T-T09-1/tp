@@ -9,6 +9,12 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.AppointmentDateTime;
+import seedu.address.model.appointment.AppointmentLength;
+import seedu.address.model.appointment.AppointmentLocation;
+import seedu.address.model.appointment.AppointmentMessage;
+import seedu.address.model.appointment.AppointmentStatus;
+import seedu.address.model.appointment.AppointmentType;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -136,5 +142,85 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String dateTime} into an {@code AppointmentDateTime}.
+     * Required field.
+     */
+    public static AppointmentDateTime parseAppointmentDateTime(String dateTime) throws ParseException {
+        requireNonNull(dateTime);
+        String trimmed = dateTime.trim();
+        if (!AppointmentDateTime.isValidDateTime(trimmed)) {
+            throw new ParseException(AppointmentDateTime.MESSAGE_CONSTRAINTS);
+        }
+        return new AppointmentDateTime(trimmed);
+    }
+
+    /**
+     * Parses a {@code String length} into an {@code AppointmentLength}.
+     * Optional; empty string means unspecified.
+     */
+    public static AppointmentLength parseAppointmentLength(String length) throws ParseException {
+        if (length == null || length.trim().isEmpty()) {
+            return new AppointmentLength(AppointmentLength.NO_LENGTH);
+        }
+        String trimmed = length.trim();
+        if (!AppointmentLength.isValidLength(trimmed)) {
+            throw new ParseException(AppointmentLength.MESSAGE_CONSTRAINTS);
+        }
+        return new AppointmentLength(trimmed);
+    }
+
+    /**
+     * Parses a {@code String location} into an {@code AppointmentLocation}.
+     * Optional; empty string means no location.
+     */
+    public static AppointmentLocation parseAppointmentLocation(String location) throws ParseException {
+        if (location == null || location.trim().isEmpty()) {
+            return new AppointmentLocation(AppointmentLocation.NO_LOCATION);
+        }
+        String trimmed = location.trim();
+        if (!AppointmentLocation.isValidLocation(trimmed)) {
+            throw new ParseException(AppointmentLocation.MESSAGE_CONSTRAINTS);
+        }
+        return new AppointmentLocation(trimmed);
+    }
+
+    /**
+     * Parses a {@code String type} into an {@code AppointmentType}.
+     * Optional; empty string means no type.
+     */
+    public static AppointmentType parseAppointmentType(String type) {
+        if (type == null || type.trim().isEmpty()) {
+            return new AppointmentType(AppointmentType.NO_TYPE);
+        }
+        return new AppointmentType(type.trim());
+    }
+
+    /**
+     * Parses a {@code String note} into an {@code AppointmentNote}.
+     * Optional; empty string means no note.
+     */
+    public static AppointmentMessage parseAppointmentMessage(String message) {
+        if (message == null || message.trim().isEmpty()) {
+            return new AppointmentMessage(AppointmentMessage.NO_MESSAGE);
+        }
+        return new AppointmentMessage(message.trim());
+    }
+
+    /**
+     * Parses a {@code String status} into an {@code AppointmentStatus}.
+     * Optional; empty string defaults to "PLANNED".
+     */
+    public static AppointmentStatus parseAppointmentStatus(String status) throws ParseException {
+        if (status == null || status.trim().isEmpty()) {
+            return new AppointmentStatus(AppointmentStatus.PLANNED);
+        }
+        String trimmed = status.trim().toLowerCase();
+        if (!AppointmentStatus.isValidStatus(trimmed)) {
+            throw new ParseException(AppointmentStatus.MESSAGE_CONSTRAINTS);
+        }
+        return new AppointmentStatus(trimmed);
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
 
 /**
@@ -42,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label rank;
+    @FXML
+    private VBox appointmentsBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -71,5 +74,10 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        appointmentsBox.getChildren().clear();
+        person.getAppointments().forEach(appt ->
+                appointmentsBox.getChildren().add(new AppointmentCard(appt).getRoot())
+        );
     }
 }

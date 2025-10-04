@@ -2,12 +2,15 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.rank.Rank;
 import seedu.address.model.tag.Tag;
 
@@ -26,18 +29,29 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Rank rank;
+    private final List<Appointment> appointments;
 
     /**
-     * Every field must be present and not null.
+     * Creates a Person with no appointments.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Rank rank) {
-        requireAllNonNull(name, phone, email, address, tags, rank);
+        this(name, phone, email, address, tags, rank, Collections.emptyList());
+    }
+
+    /**
+     * Creates a Person with the given appointments.
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, Rank rank, List<Appointment> appointments) {
+        requireAllNonNull(name, phone, email, address, tags, rank, appointments);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.rank = rank;
+        this.appointments = new ArrayList<>(appointments);
     }
 
     public Name getName() {
@@ -66,6 +80,31 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable list of this person's appointments.
+     */
+    public List<Appointment> getAppointments() {
+        return Collections.unmodifiableList(appointments);
+    }
+
+    /**
+     * Returns a new Person with the given appointment added.
+     */
+    public Person withAddedAppointment(Appointment appointment) {
+        List<Appointment> updatedAppointments = new ArrayList<>(appointments);
+        updatedAppointments.add(appointment);
+        return new Person(name, phone, email, address, tags, rank, updatedAppointments);
+    }
+
+    /**
+     * Returns a new Person with the given appointment removed.
+     */
+    public Person withRemovedAppointment(Appointment appointment) {
+        List<Appointment> updatedAppointments = new ArrayList<>(appointments);
+        updatedAppointments.remove(appointment);
+        return new Person(name, phone, email, address, tags, rank, updatedAppointments);
     }
 
     /**
@@ -102,13 +141,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && rank.equals(otherPerson.rank);
+                && rank.equals(otherPerson.rank)
+                && appointments.equals(otherPerson.appointments);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, rank);
+        return Objects.hash(name, phone, email, address, tags, rank, appointments);
     }
 
     @Override
@@ -120,6 +160,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("rank", rank)
+                .add("appointments", appointments)
                 .toString();
     }
 

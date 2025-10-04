@@ -18,20 +18,30 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
+
+      <!-- Header row with ID, Name, Rank -->
       <HBox spacing="0.5" alignment="CENTER_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
-            <!-- Ensures that the label text is never truncated -->
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" style="-fx-padding: 0 12 0 0"/>
-        <Label fx:id="rank" styleClass="cell_small_label" text="\$rank" />
+        <Label fx:id="rank" styleClass="cell_small_label" text="$rank" />
       </HBox>
+
+      <!-- Tags -->
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+
+      <!-- Contact info -->
+      <Label fx:id="phone" styleClass="cell_small_label" text="$phone" />
+      <Label fx:id="address" styleClass="cell_small_label" text="$address" />
+      <Label fx:id="email" styleClass="cell_small_label" text="$email" />
+
+      <!-- Appointments list -->
+      <VBox fx:id="appointmentsBox"
+            spacing="5"
+            style="-fx-padding: 4 4 4 4; -fx-border-radius: 5;" />
     </VBox>
   </GridPane>
 </HBox>

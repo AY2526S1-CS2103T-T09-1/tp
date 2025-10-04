@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -31,14 +32,16 @@ class JsonAdaptedPerson {
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String rank;
+    private final List<JsonAdaptedAppointment> appointments = new ArrayList<>();
 
-    /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
-     */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("rank") String rank) {
+    public JsonAdaptedPerson(@JsonProperty("name") String name,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
+                             @JsonProperty("address") String address,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("rank") String rank,
+                             @JsonProperty("appointments") List<JsonAdaptedAppointment> appointments) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,27 +50,27 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.rank = rank;
+        if (appointments != null) {
+            this.appointments.addAll(appointments);
+        }
     }
 
-    /**
-     * Converts a given {@code Person} into this class for Jackson use.
-     */
+    /** Converts a model {@code Person} to a Jackson-friendly form. */
     public JsonAdaptedPerson(Person source) {
-        name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
+        this.name = source.getName().fullName;
+        this.phone = source.getPhone().value;
+        this.email = source.getEmail().value;
+        this.address = source.getAddress().value;
+        this.tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        rank = source.getRank().rankName;
+        this.rank = source.getRank().rankName;
+        this.appointments.addAll(source.getAppointments().stream()
+                .map(JsonAdaptedAppointment::new)
+                .collect(Collectors.toList()));
     }
 
-    /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
-     */
+    /** Converts this adapted object back into the model's {@code Person}. */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
@@ -116,7 +119,12 @@ class JsonAdaptedPerson {
         }
         final Rank modelRank = new Rank(rank);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelRank);
-    }
+        // Deserialize appointments, injecting the person's name as the client name.
+        final List<Appointment> modelAppointments = new ArrayList<>();
+        for (JsonAdaptedAppointment appt : appointments) {
+            modelAppointments.add(appt.toModelType(modelName));
+        }
 
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelRank, modelAppointments);
+    }
 }
