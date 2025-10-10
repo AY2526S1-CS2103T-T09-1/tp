@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -15,6 +16,8 @@ import seedu.address.model.person.Person;
  * Deletes a person identified using it's displayed index from the address book.
  */
 public class DeleteCommand extends Command {
+
+    private static final Logger logger = Logger.getLogger(DeleteCommand.class.getName());
 
     public static final String COMMAND_WORD = "delete";
 
@@ -29,6 +32,7 @@ public class DeleteCommand extends Command {
     private final Name targetName;
 
     public DeleteCommand(Name nameToDelete) {
+        requireNonNull(nameToDelete);
         this.targetName = nameToDelete;
     }
 
@@ -52,7 +56,13 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_MULTIPLE_PERSONS_FOUND_NAME + String.join(", ", names));
         }
 
+        assert matchedPersons.size() == 1 : "There should be exactly one matched person at this point.";
         Person personToDelete = matchedPersons.get(0);
+        logger.info("Deleting person: " + matchedPersons.get(0));
+        // Only allow deletions of people who are in the filtered list, i.e. currently shown to the user.
+        if (!lastShownList.contains(matchedPersons.get(0))) {
+            throw new CommandException(Messages.MESSAGE_PERSON_DOES_NOT_EXIST);
+        }
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
