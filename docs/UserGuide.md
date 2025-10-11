@@ -128,16 +128,15 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 ### Look up clients by fields: `find`
 
 ```
-find [/n KEYWORD_1 KEYWORD_2 ...] [/p PHONE] [/e EMAIL] [/a ADDRESS] [/t TAG] [/r RANK]
+find [/n KEYWORD_1 KEYWORD_2 ...] [/p PHONE] [/e EMAIL] [/t TAG] [/r RANK]
 ```
 You can use this command to retrieve a list of clients that match the specified attributes:
 - Name `/n KEYWORD_1 KEYWORD_2 ...` — lists all clients whose names contain any of the specified keywords.
 The search is case-insensitive.
 - Phone number `/p PHONE` - lists all clients whose phone numbers exactly match `PHONE`.
 - Email `/e EMAIL` - lists all clients whose email exactly match `EMAIL`.
-- Address `/r ADDRESS` - lists all clients whose address exactly match `ADDRESS`.
 - Tag `/t TAG` - lists all clients whose tag contains `TAG`.
-- Address `/r ADDRESS` - lists all clients whose rank exactly match `RANK`.
+- Rank `/r RANK` - lists all clients whose rank exactly match `RANK`.
 
 > [!NOTE]  
 > The order of the attributes does not matter.

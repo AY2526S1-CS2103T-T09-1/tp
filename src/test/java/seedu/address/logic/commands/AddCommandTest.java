@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
@@ -22,6 +23,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ViewMode;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
@@ -197,6 +199,16 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setViewMode(ViewMode mode) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObjectProperty<ViewMode> getObservableViewMode() {
             throw new AssertionError("This method should not be called.");
         }
     }
