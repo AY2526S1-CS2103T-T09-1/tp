@@ -24,6 +24,7 @@ public class AppointmentCard extends UiPart<Region> {
 
     @FXML private HBox appointmentCardRoot;
     @FXML private VBox calendarBox;
+    @FXML private Label id;
     @FXML private Label month;
     @FXML private Label day;
     @FXML private Label year;
@@ -67,6 +68,7 @@ public class AppointmentCard extends UiPart<Region> {
         status.getStyleClass().addAll("status-pill", "status-" + apptStatus);
 
         // Set details
+        id.setText("ID: " + appointment.getId());
         type.setText("Type: " + appointment.getType());
         appointmentLocation.setText("Location: " + appointment.getLocation());
         length.setText("Duration: " + appointment.getLength());

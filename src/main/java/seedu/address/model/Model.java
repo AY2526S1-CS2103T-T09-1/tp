@@ -125,6 +125,8 @@ public interface Model {
      */
     void setAppointment(Appointment target, Appointment editedAppointment);
 
+    void setAppointmentWithPerson(Appointment target, Appointment editedAppointment, Person client);
+
     /**
      * Returns an unmodifiable view of the filtered appointment list.
      */

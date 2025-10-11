@@ -21,4 +21,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_MESSAGE = new Prefix("/msg");
     public static final Prefix PREFIX_STATUS = new Prefix("/status");
     public static final Prefix PREFIX_FLAG = new Prefix("-");
+    public static final Prefix PREFIX_ID = new Prefix("/id");
 }

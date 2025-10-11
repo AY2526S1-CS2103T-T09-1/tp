@@ -28,6 +28,11 @@ public class AppointmentLength {
         this.duration = DurationUtil.durationFromString(durationString);
     }
 
+    /**
+     * Checks if string is a valid length (0 is unacceptable)
+     * @param test String to be checked
+     * @return A boolean stating whether string is valid or not
+     */
     public static boolean isValidLength(String test) {
         return test.equals(NO_LENGTH) || test.matches(VALIDATION_REGEX);
     }

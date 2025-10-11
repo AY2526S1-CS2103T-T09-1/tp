@@ -108,6 +108,17 @@ public class Person {
     }
 
     /**
+     * Returns a new Person with new Appointment updated to an old appointment
+     */
+    public Person withUpdatedAppointment(Appointment oldAppt, Appointment newAppt) {
+        List<Appointment> updatedAppointments = new ArrayList<>(appointments);
+        updatedAppointments = updatedAppointments.stream()
+                .map(x -> x.equals(oldAppt) ? newAppt : x)
+                .toList();
+        return new Person(name, phone, email, address, tags, rank, updatedAppointments);
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */

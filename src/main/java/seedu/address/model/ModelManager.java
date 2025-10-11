@@ -171,6 +171,14 @@ public class ModelManager implements Model {
         addressBook.setAppointment(target, editedAppointment);
     }
 
+    @Override
+    public void setAppointmentWithPerson(Appointment target, Appointment editedAppointment, Person client) {
+        Person updatedClient = client.withUpdatedAppointment(target, editedAppointment);
+        setPerson(client, updatedClient);
+        setAppointment(target, editedAppointment);
+    }
+
+
     //=========== Filtered Appointment List Accessors =======================================================
 
     @Override

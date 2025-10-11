@@ -19,6 +19,7 @@
 
     <!-- Details -->
     <VBox fx:id="detailsBox" spacing="6">
+        <Label fx:id="id" styleClass="cell_small_label"/>
         <Label fx:id="status" styleClass="cell_small_label"/>
         <Label fx:id="type" styleClass="cell_small_label"/>
         <Label fx:id="appointmentLocation" styleClass="cell_small_label"/>

@@ -147,4 +147,13 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return true;
     }
+
+    public Person getPerson(Name name) {
+        for (Person person : internalList) {
+            if (person.getName().equals(name)) {
+                return person;
+            }
+        }
+        return null;
+    }
 }

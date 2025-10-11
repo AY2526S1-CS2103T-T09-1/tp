@@ -11,7 +11,7 @@ public class AppointmentFlag {
     public static final String MESSAGE_CONSTRAINTS =
             "Flag must be either -c for create, -d for delete or -e for edit.";
     public static final String VALIDATION_REGEX = "c|d|e";
-    public final String value;
+    public final char value;
 
     /**
      * Create an appointment status
@@ -20,7 +20,7 @@ public class AppointmentFlag {
         requireNonNull(flag);
         String normalized = flag.toLowerCase();
         checkArgument(isValidFlag(normalized), MESSAGE_CONSTRAINTS);
-        this.value = normalized;
+        this.value = normalized.charAt(0);
     }
 
     private static boolean isValidFlag(String flag) {
@@ -30,7 +30,7 @@ public class AppointmentFlag {
     @Override
     public boolean equals(Object other) {
         if (other instanceof AppointmentFlag) {
-            return ((AppointmentFlag) other).value.equals(this.value);
+            return ((AppointmentFlag) other).value == this.value;
         }
         return false;
     }

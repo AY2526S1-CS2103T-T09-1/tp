@@ -17,6 +17,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDateTime;
+import seedu.address.model.appointment.AppointmentId;
 import seedu.address.model.appointment.AppointmentLength;
 import seedu.address.model.appointment.AppointmentLocation;
 import seedu.address.model.appointment.AppointmentMessage;
@@ -31,7 +32,22 @@ import seedu.address.model.person.Person;
 public class TypicalPersons {
 
     // Sample appointments
+    /*
+    Use this in test cases
+     */
+    public static final Appointment DUMMY_APPT = new Appointment(
+            new AppointmentId("0"),
+            new Name("Dummy"),
+            new AppointmentDateTime("20-10-2025 1400"),
+            new AppointmentLength("30"),
+            new AppointmentLocation("Dummy"),
+            new AppointmentType("Dummy"),
+            new AppointmentMessage("Dummy"),
+            new AppointmentStatus("planned")
+    );
+
     public static final Appointment DENTIST_APPT = new Appointment(
+            new AppointmentId("1"),
             new Name("Benson Meier"),
             new AppointmentDateTime("20-10-2025 1400"),
             new AppointmentLength("60"),
@@ -42,6 +58,7 @@ public class TypicalPersons {
     );
 
     public static final Appointment MEETING_APPT = new Appointment(
+            new AppointmentId("2"),
             new Name("Alice Pauline"),
             new AppointmentDateTime("21-10-2025 1030"),
             new AppointmentLength("90"),
@@ -52,13 +69,14 @@ public class TypicalPersons {
     );
 
     public static final Appointment MEETING_BOB = new Appointment(
-        new Name("Bob Choo"),
-        new AppointmentDateTime("20-10-2025 1400"),
-        new AppointmentLength("60"),
-        new AppointmentLocation("Dental Clinic"),
-        new AppointmentType("Health"),
-        new AppointmentMessage("Routine checkup"),
-        new AppointmentStatus("planned")
+            new AppointmentId("3"),
+            new Name("Bob Choo"),
+            new AppointmentDateTime("20-10-2025 1400"),
+            new AppointmentLength("60"),
+            new AppointmentLocation("Dental Clinic"),
+            new AppointmentType("Health"),
+            new AppointmentMessage("Routine checkup"),
+            new AppointmentStatus("planned")
     );
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")

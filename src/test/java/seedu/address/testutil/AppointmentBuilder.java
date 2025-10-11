@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDateTime;
+import seedu.address.model.appointment.AppointmentId;
 import seedu.address.model.appointment.AppointmentLength;
 import seedu.address.model.appointment.AppointmentLocation;
 import seedu.address.model.appointment.AppointmentMessage;
@@ -13,7 +14,7 @@ import seedu.address.model.person.Name;
  * A utility class to help with building {@code Appointment} objects.
  */
 public class AppointmentBuilder {
-
+    public static final String DEFAULT_ID = "0";
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_DATE_TIME = "12-10-2099 1430";
     public static final String DEFAULT_APPOINTMENT_LENGTH = "90";
@@ -22,6 +23,7 @@ public class AppointmentBuilder {
     public static final String DEFAULT_APPOINTMENT_MESSAGE = "Routine checkup";
     public static final String DEFAULT_APPOINTMENT_STATUS = "planned";
 
+    private AppointmentId id;
     private Name clientName;
     private AppointmentDateTime dateTime;
     private AppointmentLength length;
@@ -34,6 +36,7 @@ public class AppointmentBuilder {
      * Creates a {@code AppointmentBuilder} with the default details.
      */
     public AppointmentBuilder() {
+        id = new AppointmentId(DEFAULT_ID);
         clientName = new Name(DEFAULT_NAME);
         dateTime = new AppointmentDateTime(DEFAULT_DATE_TIME);
         length = new AppointmentLength(DEFAULT_APPOINTMENT_LENGTH);
@@ -47,6 +50,7 @@ public class AppointmentBuilder {
      * Initializes the {@code AppointmentBuilder} with the data of {@code appointment}.
      */
     public AppointmentBuilder(Appointment appointment) {
+        id = appointment.getId();
         clientName = appointment.getClientName();
         dateTime = appointment.getDateTime();
         length = appointment.getLength();
@@ -113,6 +117,6 @@ public class AppointmentBuilder {
     }
 
     public Appointment build() {
-        return new Appointment(clientName, dateTime, length, location, type, message, status);
+        return new Appointment(id, clientName, dateTime, length, location, type, message, status);
     }
 }

@@ -58,7 +58,13 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireAllNonNull(target, editedAppointment);
 
-        int index = internalList.indexOf(target);
+        int index = -1;
+        for (int i = 0; i < internalList.size(); i++) {
+            if (internalList.get(i).isSameAppointment(target)) {
+                index = i;
+                break;
+            }
+        }
         if (index == -1) {
             throw new AppointmentNotFoundException();
         }
