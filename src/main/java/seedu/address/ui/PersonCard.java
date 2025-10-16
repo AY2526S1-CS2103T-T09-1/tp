@@ -56,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
 
         String personRank = person.getRank().rankName.toString();
-        rank.getStyleClass().add("rank-" + personRank);
+        rank.getStyleClass().add("rank-" + personRank );
         rank.setText(personRank);
 
         phone.setText(person.getPhone().value);
@@ -68,7 +68,7 @@ public class PersonCard extends UiPart<Region> {
 
         appointmentsBox.getChildren().clear();
         person.getAppointments().forEach(appt ->
-                appointmentsBox.getChildren().add(new AppointmentCard(appt, false).getRoot())
+                appointmentsBox.getChildren().add(new AppointmentCard(appt).getRoot())
         );
     }
 }

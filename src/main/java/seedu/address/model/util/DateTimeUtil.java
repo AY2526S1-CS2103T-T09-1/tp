@@ -18,34 +18,9 @@ public class DateTimeUtil {
      * @throws IllegalArgumentException if the input string is not in the expected format
      */
     public static LocalDateTime localDateTimeFromString(String dateTime) {
-        return parseLocalDateTime(dateTime, "0000");
-    }
-
-    /**
-     * Converts a string representation of a date and time to a {@link LocalDateTime} object.
-     * <p>
-     * The expected format is "dd-MM-yyyy HHmm". If the time part is omitted, it defaults to end of day ("2359").
-     * </p>
-     *
-     * @param dateTime the string representation of the date and time
-     * @return the corresponding {@link LocalDateTime} object
-     * @throws IllegalArgumentException if the input string is not in the expected format
-     */
-    public static LocalDateTime localDateTimeFromStringEnd(String dateTime) {
-        return parseLocalDateTime(dateTime, "2359");
-    }
-
-    /**
-     * Helper method to parse a date-time string with a fallback default time.
-     *
-     * @param dateTime the string representation of the date and time
-     * @param defaultTime the default time to use if none is provided
-     * @return the corresponding {@link LocalDateTime} object
-     */
-    private static LocalDateTime parseLocalDateTime(String dateTime, String defaultTime) {
         String[] parts = dateTime.split(" ");
         String datePart = parts[0];
-        String timePart = parts.length > 1 ? parts[1] : defaultTime;
+        String timePart = parts.length > 1 ? parts[1] : "0000"; // Default to midnight if time is not provided
 
         String[] dateComponents = datePart.split("-");
         int day = Integer.parseInt(dateComponents[0]);

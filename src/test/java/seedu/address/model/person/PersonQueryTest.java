@@ -35,6 +35,15 @@ public class PersonQueryTest {
     }
 
     @Test
+    public void filter_byAddress() {
+        PersonQuery query = PersonQuery
+            .build()
+            .setAddress(ALICE.getAddress());
+        assertTrue(query.filter(ALICE));
+        assertFalse(query.filter(BOB));
+    }
+
+    @Test
     public void filter_byEmail() {
         PersonQuery query = PersonQuery
             .build()
@@ -101,6 +110,11 @@ public class PersonQueryTest {
         // comparing empty queries -> returns true
         assertTrue(aliceQuery.equals(bobQuery));
 
+        // same values -> returns true
+        aliceQuery.setAddress(ALICE.getAddress());
+        bobQuery.setAddress(ALICE.getAddress());
+        assertTrue(aliceQuery.equals(bobQuery));
+
         // same object -> returns true
         assertTrue(bobQuery.equals(bobQuery));
 
@@ -123,6 +137,11 @@ public class PersonQueryTest {
         // different email -> returns false
         aliceQuery = PersonQuery.build().setEmail(ALICE.getEmail());
         bobQuery = PersonQuery.build().setEmail(BOB.getEmail());
+        assertFalse(aliceQuery.equals(bobQuery));
+
+        // different address -> returns false
+        aliceQuery = PersonQuery.build().setAddress(ALICE.getAddress());
+        bobQuery = PersonQuery.build().setAddress(BOB.getAddress());
         assertFalse(aliceQuery.equals(bobQuery));
 
         // different tags -> returns false

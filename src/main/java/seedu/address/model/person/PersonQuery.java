@@ -25,6 +25,7 @@ public class PersonQuery {
     private Optional<Email> email;
 
     // Data fields
+    private Optional<Address> address;
     private final Optional<Set<Tag>> tags = Optional.of(new HashSet<>());
     private Optional<Rank> rank;
 
@@ -32,16 +33,17 @@ public class PersonQuery {
      * Represents empty query
      */
     private PersonQuery() {
-        this(null, null, null, new HashSet<>(), null);
+        this(null, null, null, null, new HashSet<>(), null);
     }
 
     /**
      * Building person query at once
      */
-    public PersonQuery(String[] args, Phone phone, Email email, Set<Tag> tags, Rank rank) {
+    public PersonQuery(String[] args, Phone phone, Email email, Address address, Set<Tag> tags, Rank rank) {
         setName(args);
         this.phone = Optional.ofNullable(phone);
         this.email = Optional.ofNullable(email);
+        this.address = Optional.ofNullable(address);
         this.tags.ifPresent(existingTags -> existingTags.addAll(tags));
         this.rank = Optional.ofNullable(rank);
     }
@@ -96,6 +98,11 @@ public class PersonQuery {
         return this;
     }
 
+    public PersonQuery setAddress(Address address) {
+        this.address = Optional.of(address);
+        return this;
+    }
+
     public PersonQuery setRank(Rank rank) {
         this.rank = Optional.of(rank);
         return this;
@@ -129,10 +136,11 @@ public class PersonQuery {
         // TODO: Relax the condition for phone number, address, and email
         // TODO: Decouple the logic
         boolean isCorrectPhone = this.phone.filter(phone -> !person.getPhone().equals(phone)).isEmpty();
+        boolean isCorrectAddress = this.address.filter(address -> !person.getAddress().equals(address)).isEmpty();
         boolean isCorrectEmail = this.email.filter(email -> !person.getEmail().equals(email)).isEmpty();
         boolean isCorrectRank = this.rank.filter(rank -> !person.getRank().equals(rank)).isEmpty();
         boolean isCorrectTags = this.tags.filter(tags -> !person.getTags().containsAll(tags)).isEmpty();
-        return isCorrectName && isCorrectPhone && isCorrectEmail && isCorrectRank
+        return isCorrectName && isCorrectPhone && isCorrectAddress && isCorrectEmail && isCorrectRank
                 && isCorrectTags;
     }
 
@@ -143,6 +151,7 @@ public class PersonQuery {
         this.name.ifPresent(n -> builder.add("name", n));
         this.phone.ifPresent(p -> builder.add("phone", p));
         this.email.ifPresent(e -> builder.add("email", e));
+        this.address.ifPresent(a -> builder.add("address", a));
         this.tags.ifPresent(t -> builder.add("tags", t));
         this.rank.ifPresent(r -> builder.add("rank", r));
         return builder.toString();
@@ -167,6 +176,7 @@ public class PersonQuery {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
+                && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && rank.equals(otherPerson.rank);
     }
@@ -174,6 +184,6 @@ public class PersonQuery {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, tags, rank);
+        return Objects.hash(name, phone, email, address, tags, rank);
     }
 }

@@ -128,19 +128,21 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 ### Look up clients by fields: `find`
 
 ```
-find [/n KEYWORD_1 KEYWORD_2 ...] [/p PHONE] [/e EMAIL] [/t TAG] [/r RANK]
+find [/n KEYWORD_1 KEYWORD_2 ...] [/p PHONE] [/e EMAIL] [/a ADDRESS] [/t TAG] [/r RANK]
 ```
 You can use this command to retrieve a list of clients that match the specified attributes:
 - Name `/n KEYWORD_1 KEYWORD_2 ...` — lists all clients whose names contain any of the specified keywords.
 The search is case-insensitive.
 - Phone number `/p PHONE` - lists all clients whose phone numbers exactly match `PHONE`.
 - Email `/e EMAIL` - lists all clients whose email exactly match `EMAIL`.
+- Address `/r ADDRESS` - lists all clients whose address exactly match `ADDRESS`.
 - Tag `/t TAG` - lists all clients whose tag contains `TAG`.
-- Rank `/r RANK` - lists all clients whose rank exactly match `RANK`.
+- Address `/r ADDRESS` - lists all clients whose rank exactly match `RANK`.
 
-<div markdown="span" class="alert alert-info">:exclamation: **Remarks:**
-The order of the attributes does not matter. If you haven't specified any attributes, the system will list all clients.
-</div>
+> [!NOTE]  
+> The order of the attributes does not matter.
+> If you haven't specified any attributes, the system will list all clients.
+
 
 Example usage:
 
@@ -148,74 +150,22 @@ You want to list all urgent clients whose name contains "John" or "Doe.
 ```
 find /n John Doe /r urgent
 ```
+Example output (other fields omitted)
+```
+John Doe [rank: urgent]
+Jane Doe [rank: urgent]
+John Lock [rank: urgent]
+```
 
 You want to list all clients with tag patients and phone number 81234567.
 ```
 find /p 81234567 /t patient
 ```
-
-### Look up appointments by fields `find`
-
+Example output (other fields omitted)
 ```
-find [/appt TIME] [/status STATUS] [/type TYPE]
+James Bond [81234567, tag: patient, friend]
+John Doe [81234567, tag: patient]
 ```
-
-You can use this command to retrieve a list of appointments
-that match the specified attributes.
-
-#### Appointment meeting time `TIME`
-
-list all appointments that  overlap with the specified time. 
-Here are the example usages.
-
-List all appointments between 24th October 2025 10 - 11 am.
-```
-find /appt 24-10-2025 1000 to 24-10-2025 1100
-```
-List all appointments on 4th July 2025.
-```
-find /appt 04-07-2025
-```
-List today's appointment.
-```
-find /appt today
-```
-
-List all appointments in the upcoming three days.
-```
-find /appt +3
-```
-
-#### Appointment status `STATUS`
-List all appointments with the given status. For example,
-you want to list all cancelled appointments, you can type
-```
-find /status cancelled
-```
-
-#### Appointment type `TYPE`
-List all appointments with the given type. For example,
-you want to list all meetings with GIC. You can type
-```
-find /type GIC-Meeting
-```
-
-#### Chaining commands
-It is possible to chain these fields with [client fields](#head1234).
-For example, if you want to find today's appointment for urgent clients, you can type
-```
-find /r urgent /appt today 
-```
-
-> Although the leading command to list appointments and clients is the same, the behavior differs depending on the fields provided.
-If you include any appointment-related fields, such as `/appt`, `/status`, or `/type`, the system will list appointments.
-However, providing client-related fields alone only trigger a client listing view instead.
-For example,
-> - `find /r urgent` will show list of all clients with their respective appointments.
-> - `find /r urgent /appt today` will only show list of appointments.
->
-> The order of the attributes does not matter. If you haven't specified any attributes, the system will list all clients.
-
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
