@@ -35,6 +35,11 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindCommand.MESSAGE_USAGE));
+        }
         /*
          * Even though all fields in {@code FindCommand} are optional,
          * the command should expect at least one field. If the user
@@ -43,11 +48,9 @@ public class FindCommandParser implements Parser<FindCommand> {
          * On the other hand, if the user wants to list all appointments,
          * minimally, the user must specify {@code /appt} keyword. (and left it empty)
          * Example:
-         * `find /appt` will list all appointments.
          * `find /appt` today will list all appointments today.
          * `find` will list all clients with attached appointments.
          */
-        requireNonNull(args);
         ArgumentMultimap argMultimap =
             ArgumentTokenizer.tokenize(args,
                 // Person-related fields

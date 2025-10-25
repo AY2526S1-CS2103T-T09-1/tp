@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -66,22 +67,31 @@ public class FindCommand extends Command {
         this.appointmentQuery = Optional.of(appointmentQuery);
     }
 
+    /**
+     * Executes the find command by filtering the person list and optionally
+     * the appointment list.
+     *
+     * @param model The model to execute the command on
+     * @return CommandResult with the number of filtered items
+     * @throws CommandException If execution fails
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         model.updateFilteredPersonList(personQuery::filter);
-        appointmentQuery.ifPresent(a -> {
-            model.updateFilteredAppointmentList(a::filter);
+
+        if (appointmentQuery.isPresent()) {
+            model.updateFilteredAppointmentList(appointmentQuery.get()::filter);
             model.setViewMode(ViewMode.APPOINTMENTS);
-        });
-        if (appointmentQuery.isEmpty()) {
-            return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
-        } else {
             return new CommandResult(
                 String.format(Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW,
                     model.getFilteredAppointmentList().size()));
         }
+
+        return new CommandResult(
+            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                model.getFilteredPersonList().size()));
     }
 
     @Override
@@ -96,7 +106,8 @@ public class FindCommand extends Command {
         }
 
         FindCommand otherFindCommand = (FindCommand) other;
-        return personQuery.equals(otherFindCommand.personQuery);
+        return personQuery.equals(otherFindCommand.personQuery)
+            && appointmentQuery.equals(otherFindCommand.appointmentQuery);
     }
 
     @Override
@@ -107,5 +118,10 @@ public class FindCommand extends Command {
             appt -> builder.add("appointmentQuery",
                 appt.toString(new ToStringBuilder(""))));
         return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(personQuery, appointmentQuery);
     }
 }

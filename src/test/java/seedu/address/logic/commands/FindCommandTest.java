@@ -63,7 +63,7 @@ public class FindCommandTest {
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstQuery);
+        FindCommand findFirstCommandCopy = new FindCommand(firstQuery, firstAppointmentQuery);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false

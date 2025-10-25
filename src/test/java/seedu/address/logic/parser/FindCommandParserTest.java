@@ -62,8 +62,9 @@ public class FindCommandParserTest {
     @Test
     public void parse_emptyArg_success() {
         String userInput = "    ";
-        FindCommand expectedFindCommand = new FindCommand(PersonQuery.build());
-        assertParseSuccess(parser, userInput, expectedFindCommand);
+        assertParseFailure(parser, userInput,
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindCommand.MESSAGE_USAGE));
     }
 
     // Parse some field shows success
@@ -158,7 +159,7 @@ public class FindCommandParserTest {
         // both days specified
         String dateTimeStart = "12-10-2025 1200";
         String dateTimeEnd = "13-10-2025 1300";
-        userInput = " " + PREFIX_APPOINTMENT + " " + dateTimeStr;
+        userInput = " " + PREFIX_APPOINTMENT + " " + dateTimeStr + " to " + dateTimeEnd;
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
         query = AppointmentQuery.build().setDateTime(new AppointmentDateTimeQuery(
                 LocalDateTime.parse(dateTimeStart, formatter),

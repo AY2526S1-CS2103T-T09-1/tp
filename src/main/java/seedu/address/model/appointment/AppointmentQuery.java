@@ -24,7 +24,7 @@ public class AppointmentQuery {
     }
 
     /**
-     * Building person query at once
+     * Building appointment query at once
      */
     public AppointmentQuery(AppointmentDateTimeQuery dateTime,
                             AppointmentType type,
@@ -35,7 +35,7 @@ public class AppointmentQuery {
     }
 
     /**
-     * A default factory method to create PersonQuery object
+     * A default factory method to create AppointmentQuery object
      */
     public static AppointmentQuery build() {
         return new AppointmentQuery();
@@ -57,16 +57,21 @@ public class AppointmentQuery {
     }
 
     /**
-     * Function object of type {@code Predicate<Appointment>}
+     * Tests whether the given appointment matches this query.
+     * @param appointment The appointment to test
+     * @return true if the appointment matches all non-empty filter criteria
      */
     public boolean filter(Appointment appointment) {
-        boolean isCorrectDateTime = this.dateTime
-            .filter(dateTime -> !dateTime.filter(appointment)).isEmpty();
-        boolean isCorrectStatus = this.status
-            .filter(status -> !appointment.getStatus().equals(status)).isEmpty();
-        boolean isCorrectType = this.type
-            .filter(type -> !appointment.getType().equals(type)).isEmpty();
-        return isCorrectDateTime && isCorrectStatus && isCorrectType;
+        boolean matchesDateTime = dateTime
+            .map(dt -> dt.filter(appointment))
+            .orElse(true);
+        boolean matchesStatus = status
+            .map(s -> appointment.getStatus().equals(s))
+            .orElse(true);
+        boolean matchesType = type
+            .map(t -> appointment.getType().equals(t))
+            .orElse(true);
+        return matchesDateTime && matchesStatus && matchesType;
     }
 
     /**

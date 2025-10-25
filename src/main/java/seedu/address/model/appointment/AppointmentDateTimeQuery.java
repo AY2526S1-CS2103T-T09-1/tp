@@ -91,7 +91,7 @@ public class AppointmentDateTimeQuery {
         if (days >= 0) {
             return new AppointmentDateTimeQuery(startOfDay, startOfDay.plusDays(days));
         } else {
-            return new AppointmentDateTimeQuery(startOfDay.minusDays(days), endOfDay);
+            return new AppointmentDateTimeQuery(startOfDay.minusDays(-days), endOfDay);
         }
     }
 

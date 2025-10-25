@@ -118,22 +118,45 @@ public class PersonQuery {
      * @return true if the person corresponds to the given query addressed above.
      */
     public boolean filter(Person person) {
+        boolean matchesName = this.name
+            .map(queryNames -> hasAnyMatchingKeyword(person.getName(), queryNames))
+            .orElse(true);
 
-        boolean isCorrectName = this.name.filter(name -> {
-            Set<Name> nameKeyword = Arrays.stream(person.getName().toString().trim().split("\\s+"))
-                    .map(s -> s.trim().toLowerCase())
-                    .map(Name::new)
-                    .collect(Collectors.toSet());
-            return Collections.disjoint(name, nameKeyword);
-        }).isEmpty();
-        // TODO: Relax the condition for phone number, address, and email
-        // TODO: Decouple the logic
-        boolean isCorrectPhone = this.phone.filter(phone -> !person.getPhone().equals(phone)).isEmpty();
-        boolean isCorrectEmail = this.email.filter(email -> !person.getEmail().equals(email)).isEmpty();
-        boolean isCorrectRank = this.rank.filter(rank -> !person.getRank().equals(rank)).isEmpty();
-        boolean isCorrectTags = this.tags.filter(tags -> !person.getTags().containsAll(tags)).isEmpty();
-        return isCorrectName && isCorrectPhone && isCorrectEmail && isCorrectRank
-                && isCorrectTags;
+        boolean matchesPhone = this.phone
+            .map(queryPhone -> person.getPhone().equals(queryPhone))
+            .orElse(true);
+
+        boolean matchesEmail = this.email
+            .map(queryEmail -> person.getEmail().equals(queryEmail))
+            .orElse(true);
+
+        boolean matchesRank = this.rank
+            .map(queryRank -> person.getRank().equals(queryRank))
+            .orElse(true);
+
+        boolean matchesTags = this.tags
+            .map(queryTags -> person.getTags().containsAll(queryTags))
+            .orElse(true);
+
+        return matchesName && matchesPhone && matchesEmail
+            && matchesRank && matchesTags;
+    }
+
+    /**
+     * Checks if person's name contains any of the query keywords.
+     * Comparison is case-insensitive.
+     */
+    private boolean hasAnyMatchingKeyword(Name personName, Set<Name> queryKeywords) {
+        Set<String> personNameTokens = Arrays.stream(personName.toString().trim().split("\\s+"))
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet());
+
+        Set<String> queryTokens = queryKeywords.stream()
+            .map(Name::toString)
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet());
+
+        return !Collections.disjoint(personNameTokens, queryTokens);
     }
 
     /**
