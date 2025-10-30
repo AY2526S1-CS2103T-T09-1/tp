@@ -104,15 +104,15 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #FBFCFC;
+    -fx-background-color: #F2F1F1;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #F3F3F3;
+    -fx-background-color: #E0DFDF;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #F3F3F3;
+    -fx-border-color: #E0DFDF;
     -fx-border-width: 1;
 }
 

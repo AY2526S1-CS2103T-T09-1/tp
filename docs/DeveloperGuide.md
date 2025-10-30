@@ -145,7 +145,7 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete Alice Pauline")` API
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API
 call as an example.
 
 ![Interactions Inside the Logic Component for the `delete Alice Pauline` Command](images/DeleteSequenceDiagram.png)
@@ -618,17 +618,123 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-    1. Test case: `delete Alice Pauline`<br>
-       Expected: Alice Pauline is deleted from the list. Details of the deleted contact shown in the status message.
+1. Deleting a client with exact name
+
+    1. Prerequisites: The client list contains the target client, named `TARGET_NAME`.
+    1. Test case: `delete TARGET_NAME`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message.
        Timestamp in the status bar is updated.
+    1. Test case: `delete PREFIX_TARGET_NAME`. For example, if the target name is `Alex Yeoh`, try `delete Alex`. <br>
+       Expected: The client with`TARGET_NAME` is deleted.
+    1. Other incorrect delete commands to try: `delete`, `delete n/TARGET_NAME`, `...`<br>
+       Expected: The error message "Invalid command format! ..." is shown in the result box.
 
-    1. Test case: `delete Bobby Williams`<br>
-       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+2. Deleting a client with ambiguous prefix
+   1. Prerequisites: The client list contains the two clients with the same prefix `COMMON_PREFIX`
+      (e.g. Bernice Yu and Bernice Yee). To achieve this, you might need to add more clients to the list.
+   2. Test case: `delete COMMON_PREFIX` <br>
+   Expected: The error message "Multiple persons found with the same name! Please be more specific. ..."
+   is shown.
 
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-       Expected: Similar to previous.
+[Back to table of contents](#table-of-contents)
 
-1. _{ more test cases …​ }_
+### Find an appointment
+1. Find appointment by meeting time
+    1. Test case: `find appt/DATE TIME to DATE TIME` <br/>
+       Expected: All appointments that overlap with the specified time range
+       are listed.
+    2. Test case: `find appt/DATE` <br/>
+       Expected: All appointments on the specified date
+       are listed.
+    3. Test case: `find appt/today` <br/>
+       Expected: All appointments scheduled for today
+       are listed.
+    4. Test case: `find appt/+N` (where N is a number) <br/>
+       Expected: All appointments in the upcoming N days
+       are listed.
+    5. Test case: `find appt/-N` (where N is a number) <br/>
+         Expected: All appointments from previous N days
+         are listed.
+
+2. Find appointment by status
+    1. Test case: `find status/STATUS` <br/>
+       Expected: All appointments with the specified status
+       are listed.
+   
+3. Find appointment by type
+    1. Test case: `find type/TYPE` <br/>
+       Expected: All appointments with the specified type
+       are listed.
+
+[Back to table of contents](#table-of-contents)
+
+### Create an appointment
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** 
+
+In a live environment, HeartLink enforces a strict no-overlap policy for a client's confirmed appointments.
+An overlap, or clash, is specifically defined by the following three conditions being met:
+
+- Both appointments are set to the confirmed status.
+- Both appointments are for the same client.
+- Both appointments have overlapping timings.
+
+</div>
+
+1. Creating an appointment without appointment clashes.
+   1.  Prerequisites: The client list contains a client named `TARGET_NAME`. To make sure that there is no appointment clashes, 
+   you can add an appointment on a freshly created client.
+   2.  Test case: `link -c n/TARGET_NAME appt/DATE TIME len/MINUTES loc/LOCATION type/TYPE msg/MESSAGE status/STATUS`
+       (You can refer to the correct input format from the user guide.)
+   <br>
+   Expected: A new appointment is created and linked to `TARGET_NAME`. The status message displays the new appointment's details, including the
+   automatically generated Appointment ID, and confirms it's linked to `TARGET_NAME`. The list of appointments is shown.
+   3. Test case: `link -c n/TARGET_NAME appt/DATE TIME len/MINUTES` <br>
+   Expected: Same with previous test case, but the status is set to `planned`.
+   4. Try using invalid inputs, such as `link`, `link -c n/TARGET_NAME appt/12-10-2025` (`HHmm` is not specified), ...
+      You can refer to invalid input formats from the user guide. <br>
+      Expected: No new appointment is added.
+2. Creating an appointment with clash.
+   1. Prerequisite: The client list contains a client named `TARGET_NAME` without any appointments.
+   2. Add the first appointment to the list `link -c n/TARGET_NAME appt/12-10-2025 1000 len/30 status/confirmed`. <br>
+   Expected: The first appointment should be added successfully with its corresponding ID `ID_1`.
+   3. Add the second appointment to the list `link -c n/TARGET_NAME appt/12-10-2025 1020 len/30 status/confirmed` <br>
+   Expected: No new appointment is added. The error message "Two confirmed appointments clash ..." is shown.
+   4. An appointment clash only occurs when two appointments for the same client are confirmed. If this condition is not met,
+   both appointments should be created successfully without clashes.
+
+[Back to table of contents](#table-of-contents)
+
+### Edit an appointment
+
+1. Editing an appointment without appointment clashes.
+   1.  Prerequisites: The client list contains a client `TARGET_NAME` with at least one appointment.
+   The target appointment ID is `APPOINTMENT_ID`.
+   2. Test case `link -e id/APPOINTMENT_ID appt/DATE TIME len/MINUTES loc/LOCATION type/TYPE msg/MESSAGE status/STATUS` <br>
+   Expected: The appointment information should be edited. The list of appointments is shown.
+   3. Try using invalid inputs, such as `link`, `link -e`, `link -e appt/`, ... <br>
+   Expected: No information is edited. The error message "Invalid command format! ..." is shown in the result box.
+2. Editing an appointment with clashes.
+    1. Prerequisite: The client list contains a client named `TARGET_NAME` without any appointments.
+    2. Add the first appointment to the list `link -c n/TARGET_NAME appt/12-10-2025 1000 len/30 status/confirmed`. <br>
+          Expected: The first appointment should be added successfully with its corresponding ID `ID_1`.
+    3. Add the second appointment to the list `link -c n/TARGET_NAME appt/12-10-2025 1020 len/30 status/planned` <br>
+      Expected: The second appointment is added with appointment ID `SECOND_ID`.
+    4. Test case: `link -e id/SECOND_ID status/confirmed` <br>
+    Expected: No new appointment is added. The error message "Two confirmed appointments clash ..." is shown.
+
+[Back to table of contents](#table-of-contents)
+
+### Delete an appointment
+
+1. Deleting an appointment by ID
+   1. Prerequisite: The client list contains a client with at least one appointment. The target appointment ID is `APPOINTMENT_ID`.
+   2. Test case: `link -d id/APPOINTMENT_ID` <br>
+   Expected: The appointment with `APPOINTMENT_ID` is deleted. The list of appointments is shown.
+   3. Test case: `link -d id/APPOINTMENT_ID_NOT_IN_LIST` <br>
+   Expected: No appointment is deleted. The error message "The appointment with id `APPOINTMENT_ID_NOT_IN_LIST` could not be found".
+   4. Try using invalid inputs, such as `link id/`.
+   Expected: No appointment is deleted. The error message "Invalid ID!" is shown.
 
 [Back to table of contents](#table-of-contents)
 

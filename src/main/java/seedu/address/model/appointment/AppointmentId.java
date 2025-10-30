@@ -9,7 +9,7 @@ public class AppointmentId {
     private final String id;
 
     public AppointmentId() {
-        this.id = "";
+        this.id = "dummy";
     }
 
     public AppointmentId(String id) {

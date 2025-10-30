@@ -40,7 +40,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         idList = new ArrayList<>();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -128,10 +129,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean hasAppointment(Appointment appointment) {
         requireNonNull(appointment);
         return appointments.containsQuery(appt ->
-            appt.getClientName().equals(appointment.getClientName())
-            && appt.getDateTime().equals(appointment.getDateTime())
-            && appt.getLength().equals(appointment.getLength())
-            && appt.getStatus().equals(appointment.getStatus())
+                appt.getClientName().equals(appointment.getClientName())
+                        && appt.getDateTime().equals(appointment.getDateTime())
+                        && appt.getStatus().equals(appointment.getStatus())
         ) != null;
     }
 
@@ -145,13 +145,13 @@ public class AddressBook implements ReadOnlyAddressBook {
             return null;
         }
         AppointmentQuery query = AppointmentQuery.build()
-            .setDateTime(AppointmentDateTimeQuery.interval(appointment.getDateTime().dateTime,
-                appointment.getLength().duration))
-            .setStatus(new AppointmentStatus("confirmed"));
+                .setDateTime(AppointmentDateTimeQuery.interval(appointment.getDateTime().dateTime,
+                        appointment.getLength().duration))
+                .setStatus(new AppointmentStatus("confirmed"));
         return appointments.containsQuery(appt ->
                 query.filter(appt)
-                    && appt.getClientName().equals(appointment.getClientName())
-                    && !appt.getId().equals(appointment.getId()));
+                        && appt.getClientName().equals(appointment.getClientName())
+                        && !appt.getId().equals(appointment.getId()));
     }
 
     /**
@@ -194,7 +194,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tempId;
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {

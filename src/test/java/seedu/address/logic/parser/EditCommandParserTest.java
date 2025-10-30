@@ -26,6 +26,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -62,6 +63,7 @@ public class EditCommandParserTest {
             + "- Edit home address: edit NAME " + PREFIX_ADDRESS + "ADDRESS\n"
             + "- Edit phone number: edit NAME " + PREFIX_PHONE + "PHONE\n"
             + "- Edit email address: edit NAME " + PREFIX_EMAIL + "EMAIL\n"
+            + "- Edit rank: edit NAME " + PREFIX_RANK + "RANK\n"
             + "- Combinations: edit NAME " + PREFIX_TAG + "TAG " + PREFIX_PHONE + "PHONE ...";
 
     private EditCommandParser parser = new EditCommandParser();
