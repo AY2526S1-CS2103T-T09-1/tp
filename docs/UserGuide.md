@@ -749,7 +749,9 @@ Two confirmed appointments clash.
 [Back to List of command-related errors](#command-related-errors)
 
 #### 2. `edit`
-- Invalid syntax: `edit` `edit test` 
+- Invalid syntax: `edit` `edit test`
+
+
    ```
    Invalid command format. Please ensure that the command adheres to the following:
    - Edit name: edit NAME n/NEW_NAME
