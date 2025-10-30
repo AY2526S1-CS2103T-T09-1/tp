@@ -850,7 +850,7 @@ Two confirmed appointments clash.
     Spaces are only allowed after +65 and in the middle of the 8 digits
     ```
 - Invalid email: `@gmail.com` `hello @gmail.com` `test` `test@a.c` `test'@a.com`
-    ```
+    ```  
     Emails should be of the format local-part@domain and adhere to the following constraints:
     1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
     2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
