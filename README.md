@@ -4,7 +4,7 @@
 
 [![codecov](https://codecov.io/github/AY2526S1-CS2103T-T09-1/tp/graph/badge.svg?token=X0CYY9ZH9P)](https://codecov.io/github/AY2526S1-CS2103T-T09-1/tp)
 
-![Ui](docs/images/UI/Ui.png)
+![Ui](docs/images/Ui.png)
 
 ## About
 
