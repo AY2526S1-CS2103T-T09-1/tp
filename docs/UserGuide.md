@@ -139,7 +139,7 @@ This guide provides instructions for Social Workers in Singapore on how to effic
 
     ![Ui](images/UI/Ui.png)
     
-
+    <br>
 5. Try typing some command in the command box and press Enter to execute it. <br> E.g. typing `help` and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
@@ -276,8 +276,8 @@ Adds a new client named Betsy Crowe with email address betsycrowe@example.com, p
 
 #### Expected output:
 ```
-New person added: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Tags: [TAG1][TAG2]…​; 
-Rank: RANK
+New person added: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; 
+Tags: [TAG1][TAG2]…​; Rank: RANK
 ```
 where a new client with the given details is added into HeartLink.
 
@@ -377,7 +377,8 @@ Example:
 
 #### Expected output:
 ```
-Deleted Person: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Tags: [TAGS]; Rank: RANK
+Deleted Person: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Tags: [TAGS]; 
+Rank: RANK
 ```
 where the client is deleted from HeartLink
 
@@ -453,8 +454,8 @@ Examples:
 
 **Expected Output:**
 ```
-New appointment linked to NAME: Date/Time: DATE TIME; Length: LENGTH; Location: LOCATION; 
-Type: TYPE; Message: MESSAGE; Status: STATUS
+New appointment linked to NAME: Date/Time: DATE TIME; Length: LENGTH; 
+Location: LOCATION; Type: TYPE; Message: MESSAGE; Status: STATUS
 ```
 where an appointment is linked to the client specified in the command.
 
@@ -498,8 +499,8 @@ Edits appointment `1b9a395` to reschedule the date and time to **18 Dec 2025, 3:
 **Expected Output:**
 ```
 Appointment with NAME edited to:
- Date/Time: DATE TIME; Length: LENGTH; Location: LOCATION; Type: TYPE; Message: MESSAGE; 
- Status: STATUS
+ Date/Time: DATE TIME; Length: LENGTH; Location: LOCATION; Type: TYPE; 
+Message: MESSAGE; Status: STATUS
 ```
 where the appointment with the same ID specified in the command is edited with the new information.
 
@@ -843,8 +844,8 @@ Two confirmed appointments clash.
   Invalid command format! 
   add: Adds a person to the address book. Parameters: n/NAME p/PHONE [e/EMAIL] 
   [a/ADDRESS] [t/TAG]... [r/RANK]
-  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 
-  t/friends t/owesMoney r/stable
+  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, 
+  #02-25 t/friends t/owesMoney r/stable
   ```
 - Duplicated client:<br>
   ```
@@ -855,15 +856,15 @@ Two confirmed appointments clash.
 #### 2. `edit`
 - Invalid syntax: `edit` `edit test`<br>
 
-   ```
-   Invalid command format.
-   edit: Edits the details of the person identified by the old name used in the displayed 
-   person list. 
-   Existing values will be overwritten by the input values.
-   Parameters: OLD_NAME (must match one of the names in contacts) [n/NEW_NAME] [p/PHONE] 
-   [e/EMAIL] [a/ADDRESS] [t/TAG]... [r/RANK]
-   Example: edit John Doe p/91234567 e/johndoe@example.com
-   ```
+  ```
+  Invalid command format.
+  edit: Edits the details of the person identified by the old name used in the 
+  displayed person list. 
+  Existing values will be overwritten by the input values.
+  Parameters: OLD_NAME (must match one of the names in contacts) [n/NEW_NAME] 
+  [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [r/RANK]
+  Example: edit John Doe p/91234567 e/johndoe@example.com
+  ```
 - Invalid name of client to edit: `edit John Doe n/newName` when the client `John Doe` don't exist.<br>
   ```
   The person's name provided is invalid
@@ -873,7 +874,8 @@ Two confirmed appointments clash.
 #### 3. `delete`
 - Invalid name of client to delete: `delete`<br>
   ```
-  Names should only contain alphanumeric characters and spaces, and it should not be blank
+  Names should only contain alphanumeric characters and spaces, and it should not 
+  be blank
   ```
 [Back to table of contents](#table-of-contents)
  
@@ -882,15 +884,15 @@ Two confirmed appointments clash.
   ```
   Invalid command format! 
   Please include a flag after command.
-  i.e. To create an appointment: link -c [PARAMETERS], to delete an appointment: link -d 
-  [PARAMETERS], to edit an appointment: link -e [PARAMETERS]
+  i.e. To create an appointment: link -c [PARAMETERS], to delete an appointment: 
+  link -d [PARAMETERS], to edit an appointment: link -e [PARAMETERS]
   ```
 - Invalid flag: `link -a ` `link -a n/john appt/12-12-2025`<br>
   ```
   Invalid command format!
   Please include a flag after command.
-  i.e. To create an appointment: link -c [PARAMETERS], to delete an appointment: link -d 
-  [PARAMETERS], to edit an appointment: link -e [PARAMETERS]
+  i.e. To create an appointment: link -c [PARAMETERS], to delete an appointment: 
+  link -d [PARAMETERS], to edit an appointment: link -e [PARAMETERS]
   ```
 - Invalid syntax for create appointment: `link -c` `link -c name`<br>
   ```
@@ -898,8 +900,8 @@ Two confirmed appointments clash.
   Create flag: Links a new appointment to a client. 
   Parameters: link -c n/NAME appt/DATE TIME len/MINUTES loc/LOCATION [type/TYPE] 
   [msg/NOTES] [status/planned|confirmed|completed|cancelled] 
-  Example: link -c n/Alex Wu appt/12-10-2025 1430 len/90 loc/Bukit Merah FSC type/home-visit
-  msg/Bring consent form status/planned
+  Example: link -c n/Alex Wu appt/12-10-2025 1430 len/90 loc/Bukit Merah FSC 
+  type/home-visit msg/Bring consent form status/planned
   ```
 - Invalid name to link the appointment to: `link -c n/John appt/12-12-2025 2359` when `John` is not in the address book.<br>
   ```
@@ -907,14 +909,14 @@ Two confirmed appointments clash.
   Create flag: Links a new appointment to a client.
   Parameters: link -c n/NAME appt/DATE TIME len/MINUTES loc/LOCATION [type/TYPE] 
   [msg/NOTES] [status/planned|confirmed|completed|cancelled]
-  Example: link -c n/Alex Wu appt/12-10-2025 1430 len/90 loc/Bukit Merah FSC type/home-visit
-  msg/Bring consent form status/planned
+  Example: link -c n/Alex Wu appt/12-10-2025 1430 len/90 loc/Bukit Merah FSC 
+  type/home-visit msg/Bring consent form status/planned
   ```
 - Invalid syntax for edit appointment: `link -e` `link -e id` `link -e id/1234567`<br>
   ```
   Invalid command format!  
   Edit flag: Updates an existing appointment for a client. 
-  Parameters: link -e id/ID [appt/DATE TIME] [len/MINUTES] [loc/LOCATION] [type/TYPE] 
+  Parameters: link -e id/ID [appt/DATE TIME] [len/MINUTES] [loc/LOCATION] [type/TYPE]
   [msg/NOTES] [status/planned|confirmed|completed|cancelled] 
   Example: link -e id/1234567 appt/12-10-2025 1430 len/90 loc/Bukit Merah FSC 
   type/home-visit msg/Bring consent form status/planned
@@ -946,15 +948,15 @@ Two confirmed appointments clash.
   find appt/ 24-10-2025 to 26-10-2025
   ```
 - Invalid appointment found: `find appt/placeholder`<br>
-    ```
-    Please enter a valid DateTime in one of the following formats:
-    • 'today' — for today's date
-    • '+N' or '-N' — where N is the number of days from today (no more than 4 digits)
-    • 'dd-MM-yyyy' — for a specific date
-    • 'dd-MM-yyyy HHmm to dd-MM-yyyy HHmm' — for a custom date range
-    Note: Time (HHmm) is optional. All dates must be valid calendar dates.
-    Additionally, year must be >=1900.
-    ```
+  ```
+  Please enter a valid DateTime in one of the following formats:
+  • 'today' — for today's date
+  • '+N' or '-N' — where N is the number of days from today (no more than 4 digits)
+  • 'dd-MM-yyyy' — for a specific date
+  • 'dd-MM-yyyy HHmm to dd-MM-yyyy HHmm' — for a custom date range
+  Note: Time (HHmm) is optional. All dates must be valid calendar dates.
+  Additionally, year must be >=1900.
+  ```
 
 [Back to table of contents](#table-of-contents)
 
@@ -965,19 +967,20 @@ Two confirmed appointments clash.
   ```
 - Invalid phone number: `12345678` `912 89023` `6592343434` `+6512343434` `[empty space]`<br>
   ```
-  Phone numbers should only contain numbers, and it should be 8 digits long starting with 
-  9, 8 or 6
+  Phone numbers should only contain numbers, and it should be 8 digits long 
+  starting with 9, 8 or 6
   Spaces are only allowed after +65 and in the middle of the 8 digits
   ```
 - Invalid email: `@gmail.com` `hello @gmail.com` `test` `test@a.c` `test'@a.com`<br>
 
   ```
-  Emails should be of the format local-part@domain and adhere to the following constraints:
+  Emails should be of the format local-part@domain and adhere to the following 
+  constraints:
   1. The local-part should only contain alphanumeric characters and these special 
-  characters, excluding the parentheses, (+_.-). The local-part may not start or end 
-  with any special characters.
-  2. This is followed by a '@' and then a domain name. The domain name is made up of 
-  domain labels separated by periods.
+  characters, excluding the parentheses, (+_.-). The local-part may not start or 
+  end with any special characters.
+  2. This is followed by a '@' and then a domain name. The domain name is made up 
+  of domain labels separated by periods.
   The domain name must:
       - end with a domain label at least 2 characters long
       - have each domain label start and end with alphanumeric characters
@@ -986,8 +989,8 @@ Two confirmed appointments clash.
   ```
 - Invalid address: `Woodlands + Street`<br>
   ``` 
-  Addresses can take any values except some symbols. Address can be blank to represent no
-  address
+  Addresses can take any values except some symbols. Address can be blank to 
+  represent no address
   ```
 - Invalid tag: `hello world` `hello-world`<br>
   ```
@@ -1002,12 +1005,13 @@ Two confirmed appointments clash.
 ### Tag-related errors (Appointment)
 - Invalid date/time for appointment: `test` `121024`<br>
   ```
-  DateTime must be in the format dd-MM-yyyy HHmm, and must be valid calendar date/time.
+  DateTime must be in the format dd-MM-yyyy HHmm, and must be valid calendar 
+  date/time.
   ```
 - Invalid length for appointment: `-10`<br>
   ```
-  Length must be a positive integer number of minutes (e.g. 30, 60, 90) with no more than
-  4 digits
+  Length must be a positive integer number of minutes (e.g. 30, 60, 90) with 
+  no more than 4 digits
   ```
 - Invalid location for appointment: `Woodlands + Street`<br>
   ```
